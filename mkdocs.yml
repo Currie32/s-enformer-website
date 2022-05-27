@@ -1,0 +1,24 @@
+site_name: Advancing gene expression prediction from sequence with sparse-attention
+
+nav:
+  - Abstract & Lay Summary: 'index.md'
+  - Background: 'background.md'
+  - Results: 'results.md'
+  - Discussion: 'discussion.md'
+  - Methods: 'methods.md'
+  - Acknowledgements: 'acknowledgements.md'
+  - Data & Code Availability: 'data_and_code.md'
+
+theme:
+  name: material
+  locale: en
+  palette:
+    scheme: default
+  features:
+    - navigation.instant
+
+markdown_extensions:
+  - footnotes
+
+extra_css:
+  - stylesheets/extra.css
