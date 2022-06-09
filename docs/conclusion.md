@@ -18,19 +18,19 @@ We thank Alan Murphy and Dr. Nathan Skene for their assistance and guidance thro
 
 All the code to reproduce this work is available at:
 
-<a href=https://github.com/neurogenomics/enformer_bigbird>https://github.com/neurogenomics/enformer_bigbird</a>
+<a href=https://github.com/neurogenomics/enformer_bigbird target="_blank">https://github.com/neurogenomics/enformer_bigbird</a>
 
 ## Data Availability
 
 All the training, validation, and testing data is available at:
 
-<a href=https://console.cloud.google.com/storage/browser/basenji_barnyard/data>https://console.cloud.google.com/storage/browser/basenji_barnyard/data</a>
+<a href=https://console.cloud.google.com/storage/browser/basenji_barnyard/data target="_blank">https://console.cloud.google.com/storage/browser/basenji_barnyard/data</a>
 
 ## Ethics Declaration
 
 There are no ethical conflicts for this work. Although human data is used, it is publicly available and non-identifiable.
 
-[^1]: Zaheer, Manzil, Guru Guruganesh, Avinava Dubey, Joshua Ainslie, Chris Alberti, Santiago Ontanon, Philip Pham, et al. 2021. ‘Big Bird: Transformers for Longer Sequences’. ArXiv:2007.14062 [Cs, Stat], January. <a href=http://arxiv.org/abs/2007.14062>http://arxiv.org/abs/2007.14062</a>.
-[^2]: Katharopoulos, Angelos, Apoorv Vyas, Nikolaos Pappas, and François Fleuret. 2020. ‘Transformers Are RNNs: Fast Autoregressive Transformers with Linear Attention’. ArXiv:2006.16236 [Cs, Stat], August. <a href=http://arxiv.org/abs/2006.16236>http://arxiv.org/abs/2006.16236</a>.
-[^3]: Tay, Yi, Mostafa Dehghani, Samira Abnar, Yikang Shen, Dara Bahri, Philip Pham, Jinfeng Rao, Liu Yang, Sebastian Ruder, and Donald Metzler. 2020. ‘Long Range Arena: A Benchmark for Efficient Transformers’. ArXiv:2011.04006 [Cs], November. <a href=http://arxiv.org/abs/2011.04006>http://arxiv.org/abs/2011.04006</a>.
-[^4]: Avsec, Žiga, Melanie Weilert, Avanti Shrikumar, Sabrina Krueger, Amr Alexandari, Khyati Dalal, Robin Fropf, et al. 2021. ‘Base-Resolution Models of Transcription-Factor Binding Reveal Soft Motif Syntax’. Nature Genetics 53 (3): 354–66. <a href=https://doi.org/10.1038/s41588-021-00782-6>https://doi.org/10.1038/s41588-021-00782-6</a>.
+[^1]: Zaheer, Manzil, Guru Guruganesh, Avinava Dubey, Joshua Ainslie, Chris Alberti, Santiago Ontanon, Philip Pham, et al. 2021. ‘Big Bird: Transformers for Longer Sequences’. ArXiv:2007.14062 [Cs, Stat], January. <a href=http://arxiv.org/abs/2007.14062 target="_blank">http://arxiv.org/abs/2007.14062</a>.
+[^2]: Katharopoulos, Angelos, Apoorv Vyas, Nikolaos Pappas, and François Fleuret. 2020. ‘Transformers Are RNNs: Fast Autoregressive Transformers with Linear Attention’. ArXiv:2006.16236 [Cs, Stat], August. <a href=http://arxiv.org/abs/2006.16236 target="_blank">http://arxiv.org/abs/2006.16236</a>.
+[^3]: Tay, Yi, Mostafa Dehghani, Samira Abnar, Yikang Shen, Dara Bahri, Philip Pham, Jinfeng Rao, Liu Yang, Sebastian Ruder, and Donald Metzler. 2020. ‘Long Range Arena: A Benchmark for Efficient Transformers’. ArXiv:2011.04006 [Cs], November. <a href=http://arxiv.org/abs/2011.04006 target="_blank">http://arxiv.org/abs/2011.04006</a>.
+[^4]: Avsec, Žiga, Melanie Weilert, Avanti Shrikumar, Sabrina Krueger, Amr Alexandari, Khyati Dalal, Robin Fropf, et al. 2021. ‘Base-Resolution Models of Transcription-Factor Binding Reveal Soft Motif Syntax’. Nature Genetics 53 (3): 354–66. <a href=https://doi.org/10.1038/s41588-021-00782-6 target="_blank">https://doi.org/10.1038/s41588-021-00782-6</a>.

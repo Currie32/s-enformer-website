@@ -8,18 +8,18 @@ Accurate predictions of gene expression can lead to better health outcomes. Thes
 
 
 ## Glossary
-- <a href="https://jalammar.github.io/illustrated-transformer/">**Attention:**</a> A mechanism used by Transformers that provides more important inputs with greater weight when making predictions.
+- <a href=https://jalammar.github.io/illustrated-transformer/ target="_blank">**Attention:**</a> A mechanism used by Transformers that provides more important inputs with greater weight when making predictions.
 - **Enformer:** Current state-of-the-art model for predicting gene expression from a sequence of DNA.
 - **Genomic track:** A sequence of DNA described by a set of properties.
 - **Multi-task learning:** Training a machine learning model on multiple related task at once.
 - **Model architecture:** The layers in a deep learning model that transform the input into the expected output.
-- <a href="https://theaisummer.com/receptive-field/#:~:text=What%20is%20the%20receptive%20field,the%20input%20region%20(patch).">**Receptive field:**</a> The subset of a model’s input that impacts the prediction.
-- <a href="https://jalammar.github.io/illustrated-transformer/">**Transformer:**</a> A deep learning model consisting of an encoder and/or decoder, which uses attention to process an input sequence in parallel.
+- <a href=https://theaisummer.com/receptive-field/#:~:text=What%20is%20the%20receptive%20field,the%20input%20region%20(patch) target="_blank">**Receptive field:**</a> The subset of a model’s input that impacts the prediction.
+- <a href=https://jalammar.github.io/illustrated-transformer/ target="_blank">**Transformer:**</a> A deep learning model consisting of an encoder and/or decoder, which uses attention to process an input sequence in parallel.
 
 ## Abbreviations
 - **ATAC-Seq:** Assay of transposase accessible chromatin sequencing
 - **bp:** Base pairs
-- <a href=https://www.nature.com/articles/nature13182>**CAGE:**</a> Cap analysis of gene expression
+- <a href=https://www.nature.com/articles/nature13182 target="_blank">**CAGE:**</a> Cap analysis of gene expression
 - **ChIP:** Chromatin immunoprecipitation and sequencing
 - **CNN:** Convolutional neural network
 - **DNase-Seq:** Deoxyribonuclease sequencing
