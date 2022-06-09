@@ -1,6 +1,35 @@
+a {
+    text-decoration: underline;
+}
+a.footnote-ref {
+    text-decoration: none;
+}
+.md-typeset ul li {
+    text-align: justify;
+}
+p {
+    text-align: justify;
+}
 .md-typeset h3 {
-  margin: 0px 0px 0px;
+    margin: 0px 0px 0px;
 };
 .md-typeset iframe {
-  padding: 0px;
+    padding: 0px;
+}
+.md-typeset figure {
+    padding: 0px;
+    margin: 0px auto;
+}
+.md-footer {
+    margin-top: 50px;
+}
+.md-typeset figcaption {
+    padding: 0px;
+    margin: 0px auto;
+    max-width: 28rem;
+    line-height: 1.35;
+    text-align: justify;
+}
+.md-nav__link {
+    text-decoration: none;
 }

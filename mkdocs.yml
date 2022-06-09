@@ -6,8 +6,8 @@ nav:
   - Results: 'results.md'
   - Discussion: 'discussion.md'
   - Methods: 'methods.md'
-  - Acknowledgements: 'acknowledgements.md'
-  - Data & Code Availability: 'data_and_code.md'
+  - Conclusion & Future Work: 'conclusion.md'
+  - References: 'references.md'
 
 theme:
   name: material
@@ -16,9 +16,15 @@ theme:
     scheme: default
   features:
     - navigation.instant
+    - content.tabs.link
 
 markdown_extensions:
   - footnotes
+  - attr_list
+  - md_in_html
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
 
 extra_css:
   - stylesheets/extra.css
