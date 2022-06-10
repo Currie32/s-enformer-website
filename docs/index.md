@@ -30,4 +30,4 @@ Accurate predictions of gene expression can lead to better health outcomes. Thes
 
 ## Word Count
 
-This report contains 4,764 words.
+This report contains 4,785 words.

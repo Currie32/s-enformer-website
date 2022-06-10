@@ -1,0 +1,550 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.15">
+    
+    
+      
+        <title>Discussion - Advancing gene expression prediction from sequence with sparse-attention</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.c382b1dc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cc9b2e1e.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sparse-attention-should-lead-to-more-accurate-predictions" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Advancing gene expression prediction from sequence with sparse-attention" class="md-header__button md-logo" aria-label="Advancing gene expression prediction from sequence with sparse-attention" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Advancing gene expression prediction from sequence with sparse-attention
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Discussion
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Advancing gene expression prediction from sequence with sparse-attention" class="md-nav__button md-logo" aria-label="Advancing gene expression prediction from sequence with sparse-attention" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Advancing gene expression prediction from sequence with sparse-attention
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Abstract & Lay Summary
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../background/" class="md-nav__link">
+        Background
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../results/" class="md-nav__link">
+        Results
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Discussion
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Discussion
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sparse-attention-should-lead-to-more-accurate-predictions" class="md-nav__link">
+    Sparse-attention should lead to more accurate predictions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations-to-model-training" class="md-nav__link">
+    Limitations to model training
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameter-optimisation-could-improve-results" class="md-nav__link">
+    Parameter optimisation could improve results
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#more-transformer-layers-may-be-required" class="md-nav__link">
+    More transformer layers may be required
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#increase-prediction-resolution" class="md-nav__link">
+    Increase prediction resolution
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternative-sparse-attention-methods" class="md-nav__link">
+    Alternative sparse-attention methods
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../methods/" class="md-nav__link">
+        Methods
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../conclusion/" class="md-nav__link">
+        Conclusion & Future Work
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../references/" class="md-nav__link">
+        References
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sparse-attention-should-lead-to-more-accurate-predictions" class="md-nav__link">
+    Sparse-attention should lead to more accurate predictions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations-to-model-training" class="md-nav__link">
+    Limitations to model training
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameter-optimisation-could-improve-results" class="md-nav__link">
+    Parameter optimisation could improve results
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#more-transformer-layers-may-be-required" class="md-nav__link">
+    More transformer layers may be required
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#increase-prediction-resolution" class="md-nav__link">
+    Increase prediction resolution
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternative-sparse-attention-methods" class="md-nav__link">
+    Alternative sparse-attention methods
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>Discussion</h1>
+
+<h2 id="sparse-attention-should-lead-to-more-accurate-predictions">Sparse-attention should lead to more accurate predictions</h2>
+<p>Deep learning models have made significant gains in predicting gene expression from a sequence of DNA. A key limitation of these models is that they still lack the ability to use long enough sequences to include all regulatory elements in their predictions. By replacing the self-attention mechanism from the Enformer model with BigBird’s sparse-attention, we have taken one step closer to overcoming this obstacle. Although we lacked the time and computational resources to train the model from scratch and demonstrate that using sparse-attention and a longer input sequence will achieve more accurate results, we are confident that this will be the case. This confidence is based on the state-of-the-art results achieved by BigBird<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup><sup>,</sup><sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup> from its novel architecture and earlier models scoring greater accuracy through the use of longer input sequences<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup><sup>,</sup><sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup><sup>,</sup><sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup>.</p>
+<h2 id="limitations-to-model-training">Limitations to model training</h2>
+<p>A possible explanation for not achieving accuracy parity with Enformer is the constraint placed on the model during training. When a model is being trained from scratch, all of its weights update in order to reduce the loss. This allows the model to make the best use of its architecture. When training S-Enformer, the model could not update in a cohesive way as all of the weights were frozen except for those in the sparse-attention layers. The sparse-attention layers’ weights were forced to update in a constrained environment and possibly not make optimal use of their design. Given that the self-attention layers have a different architecture to the sparse-attention layers, it might not be possible for the model to achieve its optimal performance when only the sparse-attention layer weights can update.</p>
+<h2 id="parameter-optimisation-could-improve-results">Parameter optimisation could improve results</h2>
+<p>Optimising S-Enformer’s training parameters and architecture were not a primary focus of this work. Therefore, there are potential gains to be made on our results.</p>
+<p>The learning rate was held constant at 0.0001 during training. Alternative rates, or starting with a higher rate and decaying it, could result in faster training and improved performance.</p>
+<p>The default model architecture values were used to train S-Enformer. With respect to the parameters for the sparse-attention layers, values that could be changed include the block size, number of random blocks, number of sliding blocks, and number of global blocks. Each of these values will affect the amount of attention used by the model. Given the complexities of this task, it is possible that the model is not attending to enough of the data and increasing some of these values could be beneficial.</p>
+<h2 id="more-transformer-layers-may-be-required">More transformer layers may be required</h2>
+<p>In a self-attention layer, all nodes are connected with each other. This allows information to easily be shared across the neural network. In BigBird’s sparse-attention, not all nodes are connected within a layer. For two unconnected nodes in a layer to share information, they must pass information via their connections with nodes in other layers. Given the large input sequence length, more layers than the currently used eleven could be required to achieve accuracy parity with Enformer. As a default, Bigbird uses sixteen transformer layers, which suggests that more layers might be required for optimal performance<sup id="fnref2:1"><a class="footnote-ref" href="#fn:1">1</a></sup>. Depending on the number of additional transformer layers required to match Enformer’s performance, the benefits of sparse-attention could deteriorate.</p>
+<h2 id="increase-prediction-resolution">Increase prediction resolution</h2>
+<p>Enformer was designed to predict human and mouse genomic tracks at 128 bp resolution. Depending on the task, it could be beneficial to have a more precise resolution, such as to a single base. BPNet is one such model that was designed for nucleotide-resolution prediction<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup>. Differing from S-Enformer, BPNet was trained with single-cell data, instead of bulk sequencing data. Its input sequence length is 2,068 bp, which is longer than if Enformer was scaled down to the same resolution (1,538 = 196,608 / 128). However, Enformer should be able to use a longer input sequence than 1,538 bp since shorter sequences use less memory. Nonetheless, using S-Enformer’s architecture should allow for a much longer input sequence. This is because BPNet<sup id="fnref2:6"><a class="footnote-ref" href="#fn:6">6</a></sup> uses dilated convolutional layers, which were also used by Basenji<sup id="fnref2:4"><a class="footnote-ref" href="#fn:4">4</a></sup>, the prior work to Enformer. Enformer has already demonstrated that using transformers instead of dilated convolutional layers allows for a longer input sequence length<sup id="fnref2:3"><a class="footnote-ref" href="#fn:3">3</a></sup>. The addition of sparse-attention should further these gains.</p>
+<p>A nucleotide-resolution model could be applied to GWAS to help identify the causal variant(s) for a disease or trait. This is due to the unidirectional flow of information in a model, meaning that a mutation in the input DNA sequence is the single reason for a change in the predicted gene expression. Contrary to GWAS, where there is only an association between a mutation and disease or trait. Therefore, the high-resolution predictions of a model can complement the wide search space of GWAS to better identify nucleotides of interest.</p>
+<h2 id="alternative-sparse-attention-methods">Alternative sparse-attention methods</h2>
+<p>There are multiple other sparse-attention methods that are worth exploring<sup id="fnref2:2"><a class="footnote-ref" href="#fn:2">2</a></sup>. Two notable ones are the Linear Transformer<sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup> and Performer<sup id="fnref:8"><a class="footnote-ref" href="#fn:8">8</a></sup>. Both of these models train faster and have a lower peak memory usage than BigBird<sup id="fnref3:2"><a class="footnote-ref" href="#fn:2">2</a></sup>. Since Enformer was trained for three days using 64 TPUs, reducing these training resources is critical for model retraining with sparse-attention to be more accessible. When looking at the average accuracy of predictions, Bigbird is the best performing model, but the more relevant metric is likely the text classification results<sup id="fnref4:2"><a class="footnote-ref" href="#fn:2">2</a></sup>, as this is the most similar task to predicting gene expression. In the text classification task, both the Linear Transformer and Performer outperform Bigbird, which suggests that they could achieve better results in predicting gene expression<sup id="fnref5:2"><a class="footnote-ref" href="#fn:2">2</a></sup>.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>Zaheer, Manzil, Guru Guruganesh, Avinava Dubey, Joshua Ainslie, Chris Alberti, Santiago Ontanon, Philip Pham, et al. 2021. ‘Big Bird: Transformers for Longer Sequences’. ArXiv:2007.14062 [Cs, Stat], January. <a href=http://arxiv.org/abs/2007.14062 target="_blank">http://arxiv.org/abs/2007.14062</a>.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>Tay, Yi, Mostafa Dehghani, Samira Abnar, Yikang Shen, Dara Bahri, Philip Pham, Jinfeng Rao, Liu Yang, Sebastian Ruder, and Donald Metzler. 2020. ‘Long Range Arena: A Benchmark for Efficient Transformers’. ArXiv:2011.04006 [Cs], November. <a href=http://arxiv.org/abs/2011.04006 target="_blank">http://arxiv.org/abs/2011.04006</a>.&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref5:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>Avsec, Žiga, Vikram Agarwal, Daniel Visentin, Joseph R. Ledsam, Agnieszka Grabska-Barwinska, Kyle R. Taylor, Yannis Assael, John Jumper, Pushmeet Kohli, and David R. Kelley. 2021. ‘Effective Gene Expression Prediction from Sequence by Integrating Long-Range Interactions’. Nature Methods 18 (10): 1196–1203. <a href=https://doi.org/10.1038/s41592-021-01252-x target="_blank">https://doi.org/10.1038/s41592-021-01252-x</a>.&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>Kelley, David R., Yakir A. Reshef, Maxwell Bileschi, David Belanger, Cory Y. McLean, and Jasper Snoek. 2018. ‘Sequential Regulatory Activity Prediction across Chromosomes with Convolutional Neural Networks’. Genome Research 28 (5): 739–50. <a href=https://doi.org/10.1101/gr.227819.117 target="_blank">https://doi.org/10.1101/gr.227819.117</a>.&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>Zhou, Jian, Chandra L. Theesfeld, Kevin Yao, Kathleen M. Chen, Aaron K. Wong, and Olga G. Troyanskaya. 2018. ‘Deep Learning Sequence-Based Ab Initio Prediction of Variant Effects on Expression and Disease Risk’. Nature Genetics 50 (8): 1171–79. <a href=https://doi.org/10.1038/s41588-018-0160-6 target="_blank">https://doi.org/10.1038/s41588-018-0160-6</a>.&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p>Avsec, Žiga, Melanie Weilert, Avanti Shrikumar, Sabrina Krueger, Amr Alexandari, Khyati Dalal, Robin Fropf, et al. 2021. ‘Base-Resolution Models of Transcription-Factor Binding Reveal Soft Motif Syntax’. Nature Genetics 53 (3): 354–66. <a href=https://doi.org/10.1038/s41588-021-00782-6 target="_blank">https://doi.org/10.1038/s41588-021-00782-6</a>.&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:7">
+<p>Katharopoulos, Angelos, Apoorv Vyas, Nikolaos Pappas, and François Fleuret. 2020. ‘Transformers Are RNNs: Fast Autoregressive Transformers with Linear Attention’. ArXiv:2006.16236 [Cs, Stat], August. <a href=http://arxiv.org/abs/2006.16236 target="_blank">http://arxiv.org/abs/2006.16236</a>.&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+<li id="fn:8">
+<p>Choromanski, Krzysztof, Valerii Likhosherstov, David Dohan, Xingyou Song, Andreea Gane, Tamas Sarlos, Peter Hawkins, et al. 2021. ‘Rethinking Attention with Performers’. ArXiv:2009.14794 [Cs, Stat], March. <a href=http://arxiv.org/abs/2009.14794 target="_blank">http://arxiv.org/abs/2009.14794</a>.&#160;<a class="footnote-backref" href="#fnref:8" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../results/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Results" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Results
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../methods/" class="md-footer__link md-footer__link--next" aria-label="Next: Methods" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Methods
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "content.tabs.link"], "search": "../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a6c66575.min.js"></script>
+      
+    
+  </body>
+</html>

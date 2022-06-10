@@ -1,0 +1,469 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.15">
+    
+    
+      
+        <title>Background - Advancing gene expression prediction from sequence with sparse-attention</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.c382b1dc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cc9b2e1e.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Advancing gene expression prediction from sequence with sparse-attention" class="md-header__button md-logo" aria-label="Advancing gene expression prediction from sequence with sparse-attention" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Advancing gene expression prediction from sequence with sparse-attention
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Background
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Advancing gene expression prediction from sequence with sparse-attention" class="md-nav__button md-logo" aria-label="Advancing gene expression prediction from sequence with sparse-attention" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Advancing gene expression prediction from sequence with sparse-attention
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Abstract & Lay Summary
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Background
+      </a>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../results/" class="md-nav__link">
+        Results
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../discussion/" class="md-nav__link">
+        Discussion
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../methods/" class="md-nav__link">
+        Methods
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../conclusion/" class="md-nav__link">
+        Conclusion & Future Work
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../references/" class="md-nav__link">
+        References
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>Background</h1>
+
+<p>Genome wide association studies (GWAS) have identified thousands of potential genetic variants that are associated with human diseases and traits<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>. The vast majority of these variants are located in non-coding regions, suggesting that gene regulation has a significant role in the health of an individual<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup><sup>,</sup><sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>. Adverse changes to gene expression have been linked to an increased risk of disease<sup id="fnref2:2"><a class="footnote-ref" href="#fn:2">2</a></sup><sup>,</sup><sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>. It is therefore critical to identify the genes regulated by disease-associated non-coding variants to help develop therapeutic targets. However, due to the limitations of GWAS, these studies are incapable of regularly finding the causal variant. They are limited to analysing only common variants and linkage disequilibrium makes it challenging to know if a variant is causal or not<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup>. Even if a variant was determined to be casual, its role would still be unclear, e.g. what gene it regulates.</p>
+<p>The shortcomings of GWAS can be alleviated by advances in deep learning models<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup><sup>,</sup><sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup><sup>,</sup><sup id="fnref:8"><a class="footnote-ref" href="#fn:8">8</a></sup><sup>,</sup><sup id="fnref:9"><a class="footnote-ref" href="#fn:9">9</a></sup><sup>,</sup><sup id="fnref:10"><a class="footnote-ref" href="#fn:10">10</a></sup><sup>,</sup><sup id="fnref2:5"><a class="footnote-ref" href="#fn:5">5</a></sup>. These models predict gene expression, using only a sequence of DNA as input, to help understand the impact of non-coding variants. The early work of DeepSEA demonstrated the feasibility of using deep convolutional neural networks (CNN) to predict gene expression from a sequence of DNA<sup id="fnref2:6"><a class="footnote-ref" href="#fn:6">6</a></sup>. This outperformed the previous state-of-the-art method, a support vector machine, as the authors showed that deep CNNs can better aggregate the non-linear interactions across a DNA sequence that result in the gene expression level<sup id="fnref:11"><a class="footnote-ref" href="#fn:11">11</a></sup>.</p>
+<p>Further advancements in deep learning models were made by Basset<sup id="fnref2:7"><a class="footnote-ref" href="#fn:7">7</a></sup>, Basenji<sup id="fnref2:8"><a class="footnote-ref" href="#fn:8">8</a></sup>, ExPecto<sup id="fnref2:9"><a class="footnote-ref" href="#fn:9">9</a></sup>, DeepFun<sup id="fnref2:10"><a class="footnote-ref" href="#fn:10">10</a></sup>, and Enformer<sup id="fnref3:5"><a class="footnote-ref" href="#fn:5">5</a></sup>. These models used data from an increasing number of cell and tissue types, a longer input sequence of DNA, and more advanced model architectures to achieve better results.</p>
+<p>It is necessary for a model to be trained using a variety of cell and tissue types, as transcription regulation can differ between them<sup id="fnref:12"><a class="footnote-ref" href="#fn:12">12</a></sup>. In addition, disease-causing variants tend to alter gene regulation within specific cell and tissues types<sup id="fnref:13"><a class="footnote-ref" href="#fn:13">13</a></sup>. Therefore, it is critical that a model can generalise to an extensive set of cell and tissue types to maximise its utility. Fortunately, many organisations have annotated epigenetic and expression profiles in a wide range of cell types<sup id="fnref:14"><a class="footnote-ref" href="#fn:14">14</a></sup><sup>,</sup><sup id="fnref:15"><a class="footnote-ref" href="#fn:15">15</a></sup><sup>,</sup><sup id="fnref:16"><a class="footnote-ref" href="#fn:16">16</a></sup>. Recent deep learning approaches have leveraged these resources to create training, validation, and testing datasets. Some approaches have even included non-human data, such as from mice<sup id="fnref:17"><a class="footnote-ref" href="#fn:17">17</a></sup>. The author demonstrated that a model trained on both human and mouse data outperformed a model trained solely on human data, thus demonstrating that the conserved nature of non-coding DNA between organisms can be used to improve a model’s accuracy<sup id="fnref:18"><a class="footnote-ref" href="#fn:18">18</a></sup><sup>,</sup><sup id="fnref:19"><a class="footnote-ref" href="#fn:19">19</a></sup>. An additional benefit is that non-human samples can be from cells and tissues that are unable to be easily collected from humans (e.g. brain tissue), thus serving as very useful training examples<sup id="fnref2:17"><a class="footnote-ref" href="#fn:17">17</a></sup>.</p>
+<p>The length of the input DNA sequence used by deep learning models has increased significantly from 1,000 base pairs (bp) for DeepSEA<sup id="fnref3:6"><a class="footnote-ref" href="#fn:6">6</a></sup> to almost 200,000 bp in Enformer<sup id="fnref4:5"><a class="footnote-ref" href="#fn:5">5</a></sup>. Increasing the amount of DNA used by a model is essential as some regulatory elements, such as enhancers, influence the expression of a gene from hundreds of thousands of base pairs away<sup id="fnref:20"><a class="footnote-ref" href="#fn:20">20</a></sup><sup>,</sup><sup id="fnref:21"><a class="footnote-ref" href="#fn:21">21</a></sup>. Some research estimates that 16% of enhancer-gene pairs could be more than 100,000 bp away<sup id="fnref5:5"><a class="footnote-ref" href="#fn:5">5</a></sup>. Enhancers are able to influence gene expression from long distances due to the non-linear shape of DNA. Loops are formed in DNA, which bring enhancers close to their target genes, allowing the interactions to take place<sup id="fnref:22"><a class="footnote-ref" href="#fn:22">22</a></sup>. For models to achieve even better results, they will require longer input DNA sequences to capture the remaining regulatory elements that are currently out of range.</p>
+<p>The architecture of deep learning models has evolved in recent years. Advances have been made by using more convolutional layers to learn more abstract features<sup id="fnref3:9"><a class="footnote-ref" href="#fn:9">9</a></sup>, densely connected dilated convolutions to share information across longer distances<sup id="fnref3:8"><a class="footnote-ref" href="#fn:8">8</a></sup>, and transformers with self-attention to increase the receptive field of the model and more accurately capture distal information<sup id="fnref6:5"><a class="footnote-ref" href="#fn:5">5</a></sup>.</p>
+<p><a href=https://jalammar.github.io/illustrated-transformer/ target="_blank">At a high level</a>, a Transformer model (or transformer layer) is composed of an encoder and/or a decoder unit, which allows it to process an input sequence in parallel. It is the successor of recurrent neural networks, which are limited to processing an input sequence sequentially, thereby taking longer to train. Transformers also benefit from an attention mechanism, which helps them to learn longer sequences by taking a weighted average of the tokens in the input. The average is weighted by the significance of each word with respect to the output, so the most relevant tokens receive the most weight (i.e. the most attention). An issue arises when the input sequence becomes too long. For models that use self-attention, each token in a sequence attends to all others, yielding n<sup>2</sup> weighted averages computed. This results in the memory usage of a model scaling quadratically with sequence length. Enformer, the current state-of-the-art model, suffers from this limitation.</p>
+<p>To overcome this constraint, we propose a new model, Sparse-Enformer (S-Enformer) that replaces the self-attention with sparse-attention from the BigBird model<sup id="fnref:23"><a class="footnote-ref" href="#fn:23">23</a></sup>. Using sparse-attention reduces the quadratic increase in memory usage to linear. This allows for a significantly longer DNA sequence to be used as input to a model, which should result in further accuracy improvements. We also demonstrate that S-Enformer can be trained and evaluated in exactly the same method as Enformer, which simplifies any changes to using this new model.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>Uffelmann, Emil, Qin Qin Huang, Nchangwi Syntia Munung, Jantina de Vries, Yukinori Okada, Alicia R. Martin, Hilary C. Martin, Tuuli Lappalainen, and Danielle Posthuma. 2021. ‘Genome-Wide Association Studies’. Nature Reviews Methods Primers 1 (1): 1–21. <a href=https://doi.org/10.1038/s43586-021-00056-9 target="_blank">https://doi.org/10.1038/s43586-021-00056-9</a>.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>Edwards, Stacey L., Jonathan Beesley, Juliet D. French, and Alison M. Dunning. 2013. ‘Beyond GWASs: Illuminating the Dark Road from Association to Function’. The American Journal of Human Genetics 93 (5): 779–97. <a href=https://doi.org/10.1016/j.ajhg.2013.10.012 target="_blank">https://doi.org/10.1016/j.ajhg.2013.10.012</a>.&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>Leslie, R., C. J. O’Donnell, and A. D. Johnson. 2014. ‘GRASP: Analysis of Genotype-Phenotype Results from 1390 Genome-Wide Association Studies and Corresponding Open Access Database’. Bioinformatics 30 (12): i185–94. <a href=https://doi.org/10.1093/bioinformatics/btu273 target="_blank">https://doi.org/10.1093/bioinformatics/btu273</a>.&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>Albert, Frank W., and Leonid Kruglyak. 2015. ‘The Role of Regulatory Variation in Complex Traits and Disease’. Nature Reviews Genetics 16 (4): 197–212. <a href=https://doi.org/10.1038/nrg3891 target="_blank">https://doi.org/10.1038/nrg3891</a>.&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>Avsec, Žiga, Vikram Agarwal, Daniel Visentin, Joseph R. Ledsam, Agnieszka Grabska-Barwinska, Kyle R. Taylor, Yannis Assael, John Jumper, Pushmeet Kohli, and David R. Kelley. 2021. ‘Effective Gene Expression Prediction from Sequence by Integrating Long-Range Interactions’. Nature Methods 18 (10): 1196–1203. <a href=https://doi.org/10.1038/s41592-021-01252-x target="_blank">https://doi.org/10.1038/s41592-021-01252-x</a>.&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:5" title="Jump back to footnote 5 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:5" title="Jump back to footnote 5 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:5" title="Jump back to footnote 5 in the text">&#8617;</a><a class="footnote-backref" href="#fnref5:5" title="Jump back to footnote 5 in the text">&#8617;</a><a class="footnote-backref" href="#fnref6:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p>Zhou, Jian, and Olga G. Troyanskaya. 2015. ‘Predicting Effects of Noncoding Variants with Deep Learning–Based Sequence Model’. Nature Methods 12 (10): 931–34. <a href=https://doi.org/10.1038/nmeth.3547 target="_blank">https://doi.org/10.1038/nmeth.3547</a>.&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:6" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:7">
+<p>Kelley, David R., Jasper Snoek, and John L. Rinn. 2016. ‘Basset: Learning the Regulatory Code of the Accessible Genome with Deep Convolutional Neural Networks’. Genome Research 26 (7): 990–99. <a href=https://doi.org/10.1101/gr.200535.115 target="_blank">https://doi.org/10.1101/gr.200535.115</a>.&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+<li id="fn:8">
+<p>Kelley, David R., Yakir A. Reshef, Maxwell Bileschi, David Belanger, Cory Y. McLean, and Jasper Snoek. 2018. ‘Sequential Regulatory Activity Prediction across Chromosomes with Convolutional Neural Networks’. Genome Research 28 (5): 739–50. <a href=https://doi.org/10.1101/gr.227819.117 target="_blank">https://doi.org/10.1101/gr.227819.117</a>.&#160;<a class="footnote-backref" href="#fnref:8" title="Jump back to footnote 8 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:8" title="Jump back to footnote 8 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:8" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+</li>
+<li id="fn:9">
+<p>Zhou, Jian, Chandra L. Theesfeld, Kevin Yao, Kathleen M. Chen, Aaron K. Wong, and Olga G. Troyanskaya. 2018. ‘Deep Learning Sequence-Based Ab Initio Prediction of Variant Effects on Expression and Disease Risk’. Nature Genetics 50 (8): 1171–79. <a href=https://doi.org/10.1038/s41588-018-0160-6 target="_blank">https://doi.org/10.1038/s41588-018-0160-6</a>.&#160;<a class="footnote-backref" href="#fnref:9" title="Jump back to footnote 9 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:9" title="Jump back to footnote 9 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:9" title="Jump back to footnote 9 in the text">&#8617;</a></p>
+</li>
+<li id="fn:10">
+<p>Pei, Guangsheng, Ruifeng Hu, Yulin Dai, Astrid Marilyn Manuel, Zhongming Zhao, and Peilin Jia. 2021. ‘Predicting Regulatory Variants Using a Dense Epigenomic Mapped CNN Model Elucidated the Molecular Basis of Trait-Tissue Associations’. Nucleic Acids Research 49 (1): 53–66. <a href=https://doi.org/10.1093/nar/gkaa1137 target="_blank">https://doi.org/10.1093/nar/gkaa1137</a>.&#160;<a class="footnote-backref" href="#fnref:10" title="Jump back to footnote 10 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:10" title="Jump back to footnote 10 in the text">&#8617;</a></p>
+</li>
+<li id="fn:11">
+<p>Mamoshina, Polina, Armando Vieira, Evgeny Putin, and Alex Zhavoronkov. 2016. ‘Applications of Deep Learning in Biomedicine’. Molecular Pharmaceutics 13 (5): 1445–54. <a href=https://doi.org/10.1021/acs.molpharmaceut.5b00982 target="_blank">https://doi.org/10.1021/acs.molpharmaceut.5b00982</a>.&#160;<a class="footnote-backref" href="#fnref:11" title="Jump back to footnote 11 in the text">&#8617;</a></p>
+</li>
+<li id="fn:12">
+<p>Hobert, Oliver. 2008. ‘Gene Regulation by Transcription Factors and MicroRNAs’. Science 319 (5871): 1785–86. <a href=https://doi.org/10.1126/science.1151651 target="_blank">https://doi.org/10.1126/science.1151651</a>.&#160;<a class="footnote-backref" href="#fnref:12" title="Jump back to footnote 12 in the text">&#8617;</a></p>
+</li>
+<li id="fn:13">
+<p>Aguet, François, Andrew A. Brown, Stephane E. Castel, Joe R. Davis, Yuan He, Brian Jo, Pejman Mohammadi, et al. 2017. ‘Genetic Effects on Gene Expression across Human Tissues’. Nature 550 (7675): 204–13. <a href=https://doi.org/10.1038/nature24277 target="_blank">https://doi.org/10.1038/nature24277</a>.&#160;<a class="footnote-backref" href="#fnref:13" title="Jump back to footnote 13 in the text">&#8617;</a></p>
+</li>
+<li id="fn:14">
+<p>The ENCODE Project Consortium. 2012. ‘An Integrated Encyclopedia of DNA Elements in the Human Genome’. Nature 489 (7414): 57. <a href=https://doi.org/10.1038/nature11247 target="_blank">https://doi.org/10.1038/nature11247</a>.&#160;<a class="footnote-backref" href="#fnref:14" title="Jump back to footnote 14 in the text">&#8617;</a></p>
+</li>
+<li id="fn:15">
+<p>Forrest et al. 2014. ‘A Promoter-Level Mammalian Expression Atlas’. Nature 507 (7493): 462. <a href=https://doi.org/10.1038/nature13182 target="_blank">https://doi.org/10.1038/nature13182</a>.&#160;<a class="footnote-backref" href="#fnref:15" title="Jump back to footnote 15 in the text">&#8617;</a></p>
+</li>
+<li id="fn:16">
+<p>Roadmap Epigenomics Consortium, Wouter Kundaje, Jason Ernst, Misha Bilenky, Angela Yen, Alireza Heravi-Moussavi, Pouya Kheradpour, et al. 2015. ‘Integrative Analysis of 111 Reference Human Epigenomes’. Nature 518 (7539): 317–30. <a href=https://doi.org/10.1038/nature14248 target="_blank">https://doi.org/10.1038/nature14248</a>.&#160;<a class="footnote-backref" href="#fnref:16" title="Jump back to footnote 16 in the text">&#8617;</a></p>
+</li>
+<li id="fn:17">
+<p>Kelley, David R. 2020. ‘Cross-Species Regulatory Sequence Activity Prediction’. PLOS Computational Biology 16 (7): e1008050. <a href=https://doi.org/10.1371/journal.pcbi.1008050 target="_blank">https://doi.org/10.1371/journal.pcbi.1008050</a>.&#160;<a class="footnote-backref" href="#fnref:17" title="Jump back to footnote 17 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:17" title="Jump back to footnote 17 in the text">&#8617;</a></p>
+</li>
+<li id="fn:18">
+<p>Woolfe, Adam, Martin Goodson, Debbie K. Goode, Phil Snell, Gayle K. McEwen, Tanya Vavouri, Sarah F. Smith, et al. 2004. ‘Highly Conserved Non-Coding Sequences Are Associated with Vertebrate Development’. PLOS Biology 3 (1): e7. <a href=https://doi.org/10.1371/journal.pbio.0030007 target="_blank">https://doi.org/10.1371/journal.pbio.0030007</a>.&#160;<a class="footnote-backref" href="#fnref:18" title="Jump back to footnote 18 in the text">&#8617;</a></p>
+</li>
+<li id="fn:19">
+<p>Pennacchio, Len A., Nadav Ahituv, Alan M. Moses, Shyam Prabhakar, Marcelo A. Nobrega, Malak Shoukry, Simon Minovitsky, et al. 2006. ‘In Vivo Enhancer Analysis of Human Conserved Non-Coding Sequences’. Nature 444 (7118): 499–502. <a href=https://doi.org/10.1038/nature05295 target="_blank">https://doi.org/10.1038/nature05295</a>.&#160;<a class="footnote-backref" href="#fnref:19" title="Jump back to footnote 19 in the text">&#8617;</a></p>
+</li>
+<li id="fn:20">
+<p>Levine, Mike. 2010. ‘Transcriptional Enhancers in Animal Development and Evolution’. Current Biology 20 (17): R754–63. <a href=https://doi.org/10.1016/j.cub.2010.06.070 target="_blank">https://doi.org/10.1016/j.cub.2010.06.070</a>.&#160;<a class="footnote-backref" href="#fnref:20" title="Jump back to footnote 20 in the text">&#8617;</a></p>
+</li>
+<li id="fn:21">
+<p>Long, Hannah K., Sara L. Prescott, and Joanna Wysocka. 2016. ‘Ever-Changing Landscapes: Transcriptional Enhancers in Development and Evolution’. Cell 167 (5): 1170–87. <a href=https://doi.org/10.1016/j.cell.2016.09.018 target="_blank">https://doi.org/10.1016/j.cell.2016.09.018</a>.&#160;<a class="footnote-backref" href="#fnref:21" title="Jump back to footnote 21 in the text">&#8617;</a></p>
+</li>
+<li id="fn:22">
+<p>Krivega, Ivan, and Ann Dean. 2012. ‘Enhancer and Promoter Interactions — Long Distance Calls’. Current Opinion in Genetics &amp; Development 22 (2): 79. <a href=https://doi.org/10.1016/j.gde.2011.11.001 target="_blank">https://doi.org/10.1016/j.gde.2011.11.001</a>.&#160;<a class="footnote-backref" href="#fnref:22" title="Jump back to footnote 22 in the text">&#8617;</a></p>
+</li>
+<li id="fn:23">
+<p>Zaheer, Manzil, Guru Guruganesh, Avinava Dubey, Joshua Ainslie, Chris Alberti, Santiago Ontanon, Philip Pham, et al. 2021. ‘Big Bird: Transformers for Longer Sequences’. ArXiv:2007.14062 [Cs, Stat], January. <a href=http://arxiv.org/abs/2007.14062 target="_blank">http://arxiv.org/abs/2007.14062</a>.&#160;<a class="footnote-backref" href="#fnref:23" title="Jump back to footnote 23 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Abstract &amp; Lay Summary" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Abstract & Lay Summary
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../results/" class="md-footer__link md-footer__link--next" aria-label="Next: Results" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Results
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "content.tabs.link"], "search": "../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a6c66575.min.js"></script>
+      
+    
+  </body>
+</html>
