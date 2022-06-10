@@ -18,7 +18,7 @@ We thank Alan Murphy and Dr. Nathan Skene for their assistance and guidance thro
 
 All the code to reproduce this work is available at:
 
-<a href=https://github.com/neurogenomics/enformer_bigbird target="_blank">https://github.com/neurogenomics/enformer_bigbird</a>
+<a href=https://github.com/Currie32/s-enformer target="_blank">https://github.com/Currie32/s-enformer</a>
 
 ## Data Availability
 

@@ -1,4 +1,4 @@
-site_name: Advancing gene expression prediction from sequence with sparse-attention
+site_name: Predicting gene expression from sequence using sparse-attention
 
 nav:
   - Abstract & Lay Summary: 'index.md'
