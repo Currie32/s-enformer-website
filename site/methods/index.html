@@ -13,7 +13,7 @@
     
     
       
-        <title>Methods - Advancing gene expression prediction from sequence with sparse-attention</title>
+        <title>Methods - Predicting gene expression from sequence using sparse-attention</title>
       
     
     
@@ -75,7 +75,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="Advancing gene expression prediction from sequence with sparse-attention" class="md-header__button md-logo" aria-label="Advancing gene expression prediction from sequence with sparse-attention" data-md-component="logo">
+    <a href=".." title="Predicting gene expression from sequence using sparse-attention" class="md-header__button md-logo" aria-label="Predicting gene expression from sequence using sparse-attention" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -88,7 +88,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Advancing gene expression prediction from sequence with sparse-attention
+            Predicting gene expression from sequence using sparse-attention
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -161,13 +161,13 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Advancing gene expression prediction from sequence with sparse-attention" class="md-nav__button md-logo" aria-label="Advancing gene expression prediction from sequence with sparse-attention" data-md-component="logo">
+    <a href=".." title="Predicting gene expression from sequence using sparse-attention" class="md-nav__button md-logo" aria-label="Predicting gene expression from sequence using sparse-attention" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
 
     </a>
-    Advancing gene expression prediction from sequence with sparse-attention
+    Predicting gene expression from sequence using sparse-attention
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -526,7 +526,7 @@
   <h1>Methods</h1>
 
 <h2 id="model-architecture">Model architecture</h2>
-<p>The S-Enformer architecture is a combination of the Enformer<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> and BigBird<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup> models. At a high level, S-Enformer is composed of the six parts (<a href=http://msc.bc.ic.ac.uk/~dgc21/methods/#figure-9-model-architecture>Figure 9</a>): (1: Stem) convolution blocks with attention pooling, (2: Convolutional tower) 6 convolutional blocks with batch normalisation and attention pooling, (3: Transformers) 11 transformer blocks with layer normalisation, sparse-attention, and dropout, (4: Cropping) a cropping layer, (5: Pointwise convolution) a pointwise convolution with dropout and a Gaussian error linear unit (GELU) activation function, and (6: Heads) a network head for each organism consisting of a dense layer and softplus activation function. Tensorflow v2.4.1<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup> and Sonnet v2.0.0<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> were the primary libraries for developing the model.</p>
+<p>The S-Enformer architecture is a combination of the Enformer<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> and BigBird<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup> models. At a high level, S-Enformer is composed of the six parts (<a href=http://msc.bc.ic.ac.uk/~dgc21/methods/#figure-9-model-architecture>Figure 9</a>): (1: <a href=https://github.com/Currie32/s-enformer/blob/master/s_enformer/enformer.py#L91-L95 target="_blank">Stem</a>) convolution blocks with attention pooling, (2: <a href=https://github.com/Currie32/s-enformer/blob/master/s_enformer/enformer.py#L99-L105 target="_blank">Convolutional tower</a>) 6 convolutional blocks with batch normalisation and attention pooling, (3: <a href=https://github.com/Currie32/s-enformer/blob/master/s_enformer/enformer.py#L118-L131 target="_blank">Transformers</a>) 11 transformer blocks with layer normalisation, sparse-attention, and dropout, (4: <a href=https://github.com/Currie32/s-enformer/blob/master/s_enformer/enformer.py#L133 target="_blank">Cropping</a>) a cropping layer, (5: <a href=https://github.com/Currie32/s-enformer/blob/master/s_enformer/enformer.py#L135-L138 target="_blank">Pointwise convolution</a>) a pointwise convolution with dropout and a Gaussian error linear unit (GELU) activation function, and (6: <a href=https://github.com/Currie32/s-enformer/blob/master/s_enformer/enformer.py#L148-L154 target="_blank">Heads</a>) a network head for each organism consisting of a dense layer and softplus activation function. Tensorflow v2.4.1<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup> and Sonnet v2.0.0<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> were the primary libraries for developing the model.</p>
 <h3 id="figure-9-model-architecture">Figure 9: Model architecture</h3>
 <figure>
 <p><img alt="enformer_architecture" src="../img/enformer_architecture.png" width="900" />
@@ -553,14 +553,14 @@
 <h2 id="modelling-data">Modelling data</h2>
 <p>S-Enformer was trained, validated, and tested using the same data as Enformer<sup id="fnref3:1"><a class="footnote-ref" href="#fn:1">1</a></sup>. There are 34,021 training, 2,213 validation, and 1,937 test sequences for the human genome, and 29,295 training, 2,209 validation, and 2,017 test sequences for the mouse genome. For the human genome, each example contains 684 DNase-seq or ATAC-seq, 1,860 histone modification ChIP–Seq, 2,131 TF ChIP-Seq, and 638 CAGE tracks (totalling 5,313). For the mouse genome, each example contains 228 DNase-seq or ATAC-Seq, 750 histone modification ChIP–Seq, 308 TF ChIP–Seq, and 357 CAGE tracks (totalling 1,643).</p>
 <h2 id="model-training">Model training</h2>
-<p>The model was trained for 25,000 steps using a batch size of 5 on a single RTX 6000 GPU, which took about 3 days. The Adam optimizer with a learning rate of 0.0001 was used to train S-Enformer, which is less than the final learning rate of 0.0005 for Enformer. The higher rate used by Enformer resulted in lower Pearson correlation coefficients for S-Enformer on the training and validation data. The same architecture parameters were used as Enformer, specifically 1,536 channels, 8 attention heads, and 11 transformer blocks.</p>
+<p>The model was trained for 25,000 steps using a batch size of 5 on a single RTX 6000 GPU, which took about 3 days (<a href=https://github.com/Currie32/s-enformer/blob/master/s_enformer/train/train.py target="_blank">link to code</a>). The Adam optimizer with a learning rate of 0.0001 was used to train S-Enformer, which is less than the final learning rate of 0.0005 for Enformer. The higher rate used by Enformer resulted in lower Pearson correlation coefficients for S-Enformer on the training and validation data. The same architecture parameters were used as Enformer, specifically 1,536 channels, 8 attention heads, and 11 transformer blocks.</p>
 <p>A <a href=https://tfhub.dev/deepmind/enformer/1 target="_blank">pre-trained Enformer</a> model, shared by its authors, was used when comparing the performance against S-Enformer.</p>
 <h2 id="memory-usage-and-training-speed">Memory usage and training speed</h2>
-<p>A model’s memory usage and training speed was measured across 10 training steps using a batch size of 1 on a single RTX 6000 GPU. The peak memory usage was reported using the <a href=https://www.tensorflow.org/api_docs/python/tf/config/experimental/get_memory_info target="_blank">tf.config.experimental.get_memory_info</a> function. After each training step, the memory stats were reset so that an average could be taken across the first 10 steps. Measuring the training time began just before the first training step and concluded once the tenth training step had finished.</p>
+<p>A model’s memory usage and training speed was measured across 10 training steps using a batch size of 1 on a single RTX 6000 GPU (<a href=https://github.com/Currie32/s-enformer/blob/master/s_enformer/evaluation/memory_and_speed.py target="_blank">link to code</a>). The peak memory usage was reported using the <a href=https://www.tensorflow.org/api_docs/python/tf/config/experimental/get_memory_info target="_blank">tf.config.experimental.get_memory_info</a> function. After each training step, the memory stats were reset so that an average could be taken across the first 10 steps. Measuring the training time began just before the first training step and concluded once the tenth training step had finished.</p>
 <h2 id="accuracy-evaluation">Accuracy evaluation</h2>
-<p>Only the human testing dataset was used to compare the performance between the two models. The mouse testing data was omitted as the human data was sufficient to make a fair comparison and we are more interested in these results. The Pearson correlation coefficient was reported for each of the four genomic tracks: (1) DNase-Seq and ATAC-Seq, (2) histone modifications ChIP-Seq, (3) TF ChIP-Seq, and (4) CAGE. <a href=https://www.nature.com/articles/s41592-021-01252-x#Sec18 target="_blank">Supplementary Table 2</a> from the Enformer paper was used to label the track type within each of the 5,313 testing examples. The mean Pearson correlation coefficient was reported for each track type to compare the performance between Enformer and S-Enformer.</p>
+<p>Only the human testing dataset was used to compare the performance between the two models (<a href=https://github.com/Currie32/s-enformer/blob/master/s_enformer/evaluation/correlation_performance.py target="_blank">link to code</a>). The mouse testing data was omitted as the human data was sufficient to make a fair comparison and we are more interested in these results. The Pearson correlation coefficient was reported for each of the four genomic tracks: (1) DNase-Seq and ATAC-Seq, (2) histone modifications ChIP-Seq, (3) TF ChIP-Seq, and (4) CAGE. <a href=https://www.nature.com/articles/s41592-021-01252-x#Sec18 target="_blank">Supplementary Table 2</a> from the Enformer paper was used to label the track type within each of the 5,313 testing examples. The mean Pearson correlation coefficient was reported for each track type to compare the performance between Enformer and S-Enformer.</p>
 <h2 id="measuring-the-correlation-of-predictions">Measuring the correlation of predictions</h2>
-<p>The correlation between Enformer’s and S-Enformer’s predictions were measured using the 1,939 testing sequences (the workflow is illustrated in <a href=http://msc.bc.ic.ac.uk/~dgc21/methods/#figure-11-workflow-to-measure-the-correlation-of-predictions>Figure 11</a>). Each sequence was inputted into the two models to collect the gene expression for the 5,313 genomic tracks. The tracks were then grouped into their four genomic track types and had their (Pearson) correlation measured with the experimental results to evaluate their quality. For each of the 1,939 testing sequences, the correlations were averaged within the four track types. The two model’s averaged-correlation values were then correlated (Pearson) with each other to understand the similarity between predictions.</p>
+<p>The correlation between Enformer’s and S-Enformer’s predictions were measured using the 1,939 testing sequences (the workflow is illustrated in <a href=http://msc.bc.ic.ac.uk/~dgc21/methods/#figure-11-workflow-to-measure-the-correlation-of-predictions>Figure 11</a>; <a href=https://github.com/Currie32/s-enformer/blob/master/s_enformer/evaluation/correlation_between_models.py target="_blank">link to code</a>). Each sequence was inputted into the two models to collect the gene expression for the 5,313 genomic tracks. The tracks were then grouped into their four genomic track types and had their (Pearson) correlation measured with the experimental results to evaluate their quality. For each of the 1,939 testing sequences, the correlations were averaged within the four track types. The two model’s averaged-correlation values were then correlated (Pearson) with each other to understand the similarity between predictions.</p>
 <h3 id="figure-11-workflow-to-measure-the-correlation-of-predictions">Figure 11: Workflow to measure the correlation of predictions</h3>
 <figure>
 <p><img alt="correlation_workflow" height="200" src="../img/correlation_workflow.png" />
@@ -571,7 +571,7 @@
 </figure>
 <p>To determine how often S-Enformer outperformed Enformer, the averaged-correlation values were compared, within each track type, to measure the percentage of the testing examples that S-Enformer had a higher average correlation than Enformer.</p>
 <h2 id="receptive-field">Receptive field</h2>
-<p>The receptive field for a model was measured by: (1) taking a random sequence of DNA (length = 196,608), (2) predicting the expression across all 5,313 genomic tracks, (3) randomly changing a single base at a predefined location (such as the first nucleotide), (4) again predicting the expression across all 5,313 genomic tracks, (5) calculating the difference in expression between the two sets of predictions, (6) repeating steps 1-5 one hundred times, and (7) averaging the change in expression for the 896 position across the 5,313 genomic tracks. These seven steps were repeated nine times, each using a different mutation location. The nine locations were equally spaced across the sequence of DNA.</p>
+<p>The receptive field for a model was measured by: (1) taking a random sequence of DNA (length = 196,608), (2) predicting the expression across all 5,313 genomic tracks, (3) randomly changing a single base at a predefined location (such as the first nucleotide), (4) again predicting the expression across all 5,313 genomic tracks, (5) calculating the difference in expression between the two sets of predictions, (6) repeating steps 1-5 one hundred times, and (7) averaging the change in expression for the 896 position across the 5,313 genomic tracks. These seven steps were repeated nine times, each using a different mutation location. The nine locations were equally spaced across the sequence of DNA (<a href=https://github.com/Currie32/s-enformer/blob/master/s_enformer/evaluation/receptive_field.py target="_blank">link to code</a>).</p>
 <div class="footnote">
 <hr />
 <ol>
