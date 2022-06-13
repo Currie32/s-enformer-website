@@ -1,0 +1,811 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.15">
+    
+    
+      
+        <title>Results - Predicting gene expression from sequence using sparse-attention</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.c382b1dc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cc9b2e1e.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#benefits-in-memory-usage-with-longer-sequences" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Predicting gene expression from sequence using sparse-attention" class="md-header__button md-logo" aria-label="Predicting gene expression from sequence using sparse-attention" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Predicting gene expression from sequence using sparse-attention
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Results
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Predicting gene expression from sequence using sparse-attention" class="md-nav__button md-logo" aria-label="Predicting gene expression from sequence using sparse-attention" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Predicting gene expression from sequence using sparse-attention
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Abstract & Lay Summary
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../background/" class="md-nav__link">
+        Background
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Results
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Results
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#benefits-in-memory-usage-with-longer-sequences" class="md-nav__link">
+    Benefits in memory usage with longer sequences
+  </a>
+  
+    <nav class="md-nav" aria-label="Benefits in memory usage with longer sequences">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#figure-1-memory-usage-increases-with-dna-sequence-length-11-vs-1-transformer-layers" class="md-nav__link">
+    Figure 1: Memory usage increases with DNA sequence length (11 vs 1 transformer layers)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#figure-2-average-memory-usage-depending-on-sequence-length" class="md-nav__link">
+    Figure 2: Average memory usage depending on sequence length
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-usage-and-runtime-trade-off" class="md-nav__link">
+    Memory usage and runtime trade-off
+  </a>
+  
+    <nav class="md-nav" aria-label="Memory usage and runtime trade-off">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#figure-3-slower-training-with-sparse-attention" class="md-nav__link">
+    Figure 3: Slower training with sparse-attention
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#accuracy-results-could-not-be-reproduced" class="md-nav__link">
+    Accuracy results could not be reproduced
+  </a>
+  
+    <nav class="md-nav" aria-label="Accuracy results could not be reproduced">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#figure-4-difference-in-enformers-performance" class="md-nav__link">
+    Figure 4: Difference in Enformer's performance
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#achieving-accuracy-parity-might-require-training-the-full-model" class="md-nav__link">
+    Achieving accuracy parity might require training the full model
+  </a>
+  
+    <nav class="md-nav" aria-label="Achieving accuracy parity might require training the full model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#figure-5-performance-parity-could-not-be-achieved" class="md-nav__link">
+    Figure 5: Performance parity could not be achieved
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#highly-correlated-predictions" class="md-nav__link">
+    Highly correlated predictions
+  </a>
+  
+    <nav class="md-nav" aria-label="Highly correlated predictions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#figure-6-the-models-predictions-are-highly-correlated" class="md-nav__link">
+    Figure 6: The models' predictions are highly correlated
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#figure-7-much-of-the-expression-variance-is-captured-by-the-models" class="md-nav__link">
+    Figure 7: Much of the expression variance is captured by the models
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sparse-attention-still-uses-the-entire-receptive-field" class="md-nav__link">
+    Sparse attention still uses the entire receptive field
+  </a>
+  
+    <nav class="md-nav" aria-label="Sparse attention still uses the entire receptive field">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#figure-8-the-receptive-field-is-still-in-full-use" class="md-nav__link">
+    Figure 8: The receptive field is still in full use
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../discussion/" class="md-nav__link">
+        Discussion
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../methods/" class="md-nav__link">
+        Methods
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../conclusion/" class="md-nav__link">
+        Conclusion & Future Work
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../references/" class="md-nav__link">
+        References
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#benefits-in-memory-usage-with-longer-sequences" class="md-nav__link">
+    Benefits in memory usage with longer sequences
+  </a>
+  
+    <nav class="md-nav" aria-label="Benefits in memory usage with longer sequences">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#figure-1-memory-usage-increases-with-dna-sequence-length-11-vs-1-transformer-layers" class="md-nav__link">
+    Figure 1: Memory usage increases with DNA sequence length (11 vs 1 transformer layers)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#figure-2-average-memory-usage-depending-on-sequence-length" class="md-nav__link">
+    Figure 2: Average memory usage depending on sequence length
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-usage-and-runtime-trade-off" class="md-nav__link">
+    Memory usage and runtime trade-off
+  </a>
+  
+    <nav class="md-nav" aria-label="Memory usage and runtime trade-off">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#figure-3-slower-training-with-sparse-attention" class="md-nav__link">
+    Figure 3: Slower training with sparse-attention
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#accuracy-results-could-not-be-reproduced" class="md-nav__link">
+    Accuracy results could not be reproduced
+  </a>
+  
+    <nav class="md-nav" aria-label="Accuracy results could not be reproduced">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#figure-4-difference-in-enformers-performance" class="md-nav__link">
+    Figure 4: Difference in Enformer's performance
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#achieving-accuracy-parity-might-require-training-the-full-model" class="md-nav__link">
+    Achieving accuracy parity might require training the full model
+  </a>
+  
+    <nav class="md-nav" aria-label="Achieving accuracy parity might require training the full model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#figure-5-performance-parity-could-not-be-achieved" class="md-nav__link">
+    Figure 5: Performance parity could not be achieved
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#highly-correlated-predictions" class="md-nav__link">
+    Highly correlated predictions
+  </a>
+  
+    <nav class="md-nav" aria-label="Highly correlated predictions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#figure-6-the-models-predictions-are-highly-correlated" class="md-nav__link">
+    Figure 6: The models' predictions are highly correlated
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#figure-7-much-of-the-expression-variance-is-captured-by-the-models" class="md-nav__link">
+    Figure 7: Much of the expression variance is captured by the models
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sparse-attention-still-uses-the-entire-receptive-field" class="md-nav__link">
+    Sparse attention still uses the entire receptive field
+  </a>
+  
+    <nav class="md-nav" aria-label="Sparse attention still uses the entire receptive field">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#figure-8-the-receptive-field-is-still-in-full-use" class="md-nav__link">
+    Figure 8: The receptive field is still in full use
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>Results</h1>
+
+<h2 id="benefits-in-memory-usage-with-longer-sequences">Benefits in memory usage with longer sequences</h2>
+<p>To understand how sparse-attention affected the memory usage of the model, the input sequence length was increased from 131,072 bp to 786,432 bp (<a href=http://msc.bc.ic.ac.uk/~dgc21/results/#figure-1-memory-usage-increases-with-dna-sequence-length-11-vs-1-transformer-layers>Figure 1</a>). To further clarify the impact of the attention method on the difference in memory usage, it was also measured when just one transformer layer was used (<a href=http://msc.bc.ic.ac.uk/~dgc21/results/#figure-1-memory-usage-increases-with-dna-sequence-length-11-vs-1-transformer-layers>Figure 1</a>). The difference between the memory usage when using one transformer layer, versus the original eleven, provides an estimate of the memory required for each additional transformer layer (<a href=http://msc.bc.ic.ac.uk/~dgc21/results/#figure-2-average-memory-usage-depending-on-sequence-length>Figure 2</a>).</p>
+<h3 id="figure-1-memory-usage-increases-with-dna-sequence-length-11-vs-1-transformer-layers">Figure 1: Memory usage increases with DNA sequence length (11 vs 1 transformer layers)</h3>
+<iframe width="900" height="375" frameborder="0" scrolling="no" src="//plotly.com/~Currie32/30.embed?showlink=false"></iframe>
+<div style="margin: -10px auto 30px">
+    <figcaption>
+        Memory usage scales quadratically with sequence length when the model uses self-attention. This compares to the linear scaling when sparse-attention is employed by the model. Using only one transformer layer illustrates the baseline memory usage of the model and highlights the magnitude of the difference between self- and sparse-attention.
+    </figcaption>
+</div>
+
+<p>The results when using eleven transformer layers show a clear trend that the memory usage for self-attention scales quadratically compared to the linear increase for sparse-attention. With sparse-attention, the model can handle sequence lengths upwards of 786,432 bp, while the model runs out of memory (&gt;24 GB) when using self-attention and a sequence length of 589,824 bp. The average memory usage per transformer layer provides further evidence for the difference in requirements between the two methods (<a href=http://msc.bc.ic.ac.uk/~dgc21/results/#figure-2-average-memory-usage-depending-on-sequence-length>Figure 2</a>). Each transformer layer requires less memory when using sparse-attention with a sequence length of 786,432 bp than when using self-attention with a sequence length of 393,216 bp.</p>
+<h3 id="figure-2-average-memory-usage-depending-on-sequence-length">Figure 2: Average memory usage depending on sequence length</h3>
+<iframe width="900" height="365" frameborder="0" scrolling="no" src="//plotly.com/~Currie32/35.embed?showlink=false"></iframe>
+<div style="margin: -10px auto 30px">
+    <figcaption>
+        At shorter sequence lengths, self-attention uses less memory per attention layer than sparse-attention, but this metric quickly reverses. At a sequence length of ~300,000 bp, the two attention mechanisms are equal. This plot can serve as a guide to help developers choose the sequence length and number of layers that are appropriate for their tasks and computation resources.
+    </figcaption>
+</div>
+
+<p>Despite the benefits of using sparse-attention with longer sequences, they have a cost when using shorter sequence lengths. Until the sequence length reaches approximately 300,000 bp, self-attention uses less memory than sparse-attention.</p>
+<h2 id="memory-usage-and-runtime-trade-off">Memory usage and runtime trade-off</h2>
+<p>At many of the analysed sequence lengths, training a model using sparse-attention is slower than using self-attention (<a href=http://msc.bc.ic.ac.uk/~dgc21/results/#figure-3-slower-training-with-sparse-attention>Figure 3</a>). This was true whether one or eleven transformer layers were used in the model. This result is consistent with other sparse-attention models, including Performer<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> and Reformer<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>. This suggests that the method these models use to achieve linear memory dependency has a computational cost until the input is of a sufficient size.</p>
+<h3 id="figure-3-slower-training-with-sparse-attention">Figure 3: Slower training with sparse-attention</h3>
+<iframe width="900" height="350" frameborder="0" scrolling="no" src="//plotly.com/~Currie32/38.embed?showlink=false"></iframe>
+<div style="margin: -10px auto 30px">
+    <figcaption>
+        Training the model is slower with sparse-attention at many of the tested sequence lengths. Given that a model needs to be trained for thousands of steps, using sparse-attention significantly increases the duration of training.
+    </figcaption>
+</div>
+
+<p>The Long-Range Arena benchmark<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>, which compares memory-efficient Transformers against the vanilla Transformer in a range of tasks, provides further evidence of the computational speed of BigBird’s sparse-attention mechanism. BigBird trained slower than the vanilla Transformer until the input sequence length was greater than 3,000. Compared to the other memory efficient Transformers, it was the second slowest (out of eight) to train<sup id="fnref2:3"><a class="footnote-ref" href="#fn:3">3</a></sup>.</p>
+<h2 id="accuracy-results-could-not-be-reproduced">Accuracy results could not be reproduced</h2>
+<p>The authors <a href=https://tfhub.dev/deepmind/enformer/1 target="_blank">released</a> a pre-trained version of Enformer. To confirm its performance matched the results in its paper, <a href=https://www.nature.com/articles/s41592-021-01252-x/figures/1 target="_blank">Figure 1c</a><sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>, we ran the model evaluation code that the authors shared (see the <a href=https://github.com/deepmind/deepmind-research/blob/master/enformer/enformer-training.ipynb target="_blank">evaluate_model</a> function). Adjustments were made to this code to measure the performance on the four genomic track types individually. Despite the change, the methodology remained the same. The four genomic track types are: (1) DNA accessibility, which was measured using deoxyribonuclease sequencing (DNase-Seq) and assay of transposase accessible chromatin sequencing (ATAC-Seq), (2) histone modification chromatin immunoprecipitation and sequencing (ChIP-Seq), (3) transcription factor (TF) ChIP-Seq, and (4) cap analysis of gene expression (CAGE)<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup>. Each testing example has its corresponding track listed in <a href=https://www.nature.com/articles/s41592-021-01252-x#Sec18 target="_blank">Supplementary Table 2</a> of the Enformer paper.</p>
+<p>We could not reproduce the results from their paper (<a href=http://msc.bc.ic.ac.uk/~dgc21/results/#figure-4-difference-in-enformers-performance>Figure 4</a>) and it is unclear why this is the case. The authors of the paper were contacted about this matter, but they did not provide an explanation for the difference. Going forward in this report, our results for Enformer will be used as the benchmark to provide a fair comparison against S-Enformer.</p>
+<h3 id="figure-4-difference-in-enformers-performance">Figure 4: Difference in Enformer's performance</h3>
+<iframe width="900" height="300" frameborder="0" scrolling="no" src="//plotly.com/~Currie32/42.embed?showlink=false"></iframe>
+<div style="margin: -10px auto 30px">
+    <figcaption>
+        The Pearson correlation coefficients from the paper could not be reproduced. The difference between our results and Avsec et al’s paper’s vary considerably. The largest difference in the Pearson correlation coefficients is 0.129, for the TF ChIP-Seq tracks, while the smallest difference is 0.021, for the CAGE tracks.
+    </figcaption>
+</div>
+
+<h2 id="achieving-accuracy-parity-might-require-training-the-full-model">Achieving accuracy parity might require training the full model</h2>
+<p>We attempted to achieve accuracy parity with Enformer by training S-Enformer, but only updating the weights in the sparse-attention layers. This method is similar to fine-tuning, as all of the weights were frozen except for those in the new layers. Also like fine-tuning, the benefit of this method is that it could save a significant amount of time and computational resources compared to retraining the model from scratch. Enformer was trained on 64 tensor processing units (TPU) v3 cores with a batch size of 64 (1 per core) for 150,000 steps over approximately 3 days<sup id="fnref2:4"><a class="footnote-ref" href="#fn:4">4</a></sup>. Reducing this training process to more modest levels could help to make updating state-of-the-art models more accessible. When fine-tuning a model, it has been shown that performance parity can be achieved from just a few hours of training on a single GPU<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup>. However, after training the model for 25,000 steps, with a batch size of 5 over 3 days, we were unable to achieve the same Pearson correlation coefficients as Enformer (<a href=http://msc.bc.ic.ac.uk/~dgc21/results/#figure-5-performance-parity-could-not-be-achieved>Figure 5</a>).</p>
+<h3 id="figure-5-performance-parity-could-not-be-achieved">Figure 5: Performance parity could not be achieved</h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">5a. Performance comparison after training</label><label for="__tabbed_1_2">5b. Performance comparison during training</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><iframe width="900" height="350" frameborder="0" scrolling="no" src="//plotly.com/~Currie32/40.embed?showlink=false"></iframe>
+<div style="margin: -10px auto 20px">
+    <figcaption>
+        The performance after training S-Enformer for 25,000 steps with a batch size of 5 compared to the pre-trained Enformer. Enformer still outperforms S-Enformer on all four of the genomic track types.
+    </figcaption>
+</div></p>
+</div>
+<div class="tabbed-block">
+<p><iframe width="670" height="350" frameborder="0" scrolling="no" src="//plotly.com/~Currie32/33.embed?showlink=false"></iframe>
+<div style="margin: -10px auto 20px">
+    <figcaption>
+        S-Enformer could not achieve the same performance as Enformer after being trained for 25,000 steps with a batch size of 5. Its performance metrics were still improving at the end of the three days of training, so it is possible that parity could be achieved with further training.
+    </figcaption>
+</div></p>
+</div>
+</div>
+</div>
+<p>Since much of S-Enformer was pretrained when we began retraining, it quickly achieves non-trivial performance. Progress quickly slows, but is still continuing at the 25,000th step. It is possible that using different training parameters and further training steps could result in performance parity, but due to time limitations and parameter optimization not being the primary focus of this work, these possibilities were not explored.</p>
+<h2 id="highly-correlated-predictions">Highly correlated predictions</h2>
+<p>To better understand the difference between Enformer and S-Enformer, the performance of their predictions were plotted together (<a href=http://msc.bc.ic.ac.uk/~dgc21/results/#figure-6-the-models-predictions-are-highly-correlated>Figure 6</a>). It is clear that the predictions are highly correlated, as the Pearson correlation coefficient for the genomic track types range from 0.863 to 0.962. Although all of the correlations are high, their range is noticeable. The results for the TF ChIP tracks are clustered tightly together, but the CAGE tracks can have significant differences. It is also noticeable that Enformer regularly, but not always, outperforms S-Enformer. S-Enformer outperforms Enformer in ~15% of testing examples on the DNase &amp; ATAC and CAGE tracks, but only ~3% of histone modification ChIP tracks. Further investigation of this work is required to understand the cause of these discrepancies.</p>
+<h3 id="figure-6-the-models-predictions-are-highly-correlated">Figure 6: The models' predictions are highly correlated</h3>
+<figure>
+<p><img alt="correlation_results" src="../img/correlation_results.png" width="650" />
+  </p>
+<figcaption>
+    S-Enformer’s and Enformer’s predictions are highly correlated. This is expected given the architectural and performance similarities. It is interesting that the correlations vary so much between the genomic track types and it is unclear why this is the case.
+  </figcaption>
+<div style="margin-top: 20px"></div>
+</figure>
+<p>Looking at a set of genomic tracks provides some insight into how Enformer and S-Enformer predict the results from experiments (<a href=http://msc.bc.ic.ac.uk/~dgc21/results/#figure-7-much-of-the-expression-variance-is-captured-by-the-models>Figure 7</a>). The models captured much of the variance and some of the main peaks in the tracks, but can struggle if there is significant variation over a short sequence of DNA. From calculating the mean and median gene expression for each track in the testing data, Enformer and S-Enformer both tend to overpredict compared to the experimental results.</p>
+<h3 id="figure-7-much-of-the-expression-variance-is-captured-by-the-models">Figure 7: Much of the expression variance is captured by the models</h3>
+<figure>
+<p><img alt="correlation_example" src="../img/correlation_example.png" width="900" />
+  </p>
+<figcaption>
+    A prediction from each model on the four genomic track types alongside the experiment results. This comparison helps to illustrate the shortcomings of the models. They can capture a substantial amount of the variance in the genomic tracks and predict some of the main peaks, but struggle with large variation within a small range.
+  </figcaption>
+</figure>
+<h2 id="sparse-attention-still-uses-the-entire-receptive-field">Sparse attention still uses the entire receptive field</h2>
+<p>The receptive field of the model was measured to confirm that no reduction was made by replacing the self-attention layers with sparse-attention. The results in <a href=http://msc.bc.ic.ac.uk/~dgc21/results/#figure-8-the-receptive-field-is-still-in-full-use>Figure 8</a> illustrate that the model’s receptive field still encompasses the entire input sequence. This means that a change in nucleotide at any base will result in a change in the predicted gene expression across an entire track.</p>
+<h3 id="figure-8-the-receptive-field-is-still-in-full-use">Figure 8: The receptive field is still in full use</h3>
+<figure>
+<p><img alt="receptive_field_results" src="../img/receptive_field_results.png" width="900" />
+  </p>
+<figcaption>
+    S-Enformer’s and Enformer’s receptive fields are both equal to the full length of the input sequence. This means that any change to the input sequence will result in a change to the predicted gene expression levels. However, how a mutation affects their predictions is different. S-Enformer is more affected by mutations that are towards the end of the input sequence, while Enformer makes larger changes to its predictions when the mutation is towards the middle of the input sequence.
+  </figcaption>
+<div style="margin-top: 20px"></div>
+</figure>
+<p>There is a noticeable difference in how a mutation affects the predicted expression based on attention type. When a mutation is at the start or end of the input sequence, sparse-attention predicts a greater and more uniform change in gene expression than self-attention. The change in predicted expression by self-attention is skewed towards the mutation’s end of the sequence. When the mutation is towards the centre of the input sequence, both models have a visible peak where the change in predicted gene expression is most significant. A peak’s location in a genomic track is correlated with the mutation’s location in the input sequence. Sparse-attention differs from self-attention as its peak is greater and there is a more significant drop-off in the predicted change in gene expression as the distance increases from the peak.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>Choromanski, Krzysztof, Valerii Likhosherstov, David Dohan, Xingyou Song, Andreea Gane, Tamas Sarlos, Peter Hawkins, et al. 2021. ‘Rethinking Attention with Performers’. ArXiv:2009.14794 [Cs, Stat], March. <a href=http://arxiv.org/abs/2009.14794 target="_blank">http://arxiv.org/abs/2009.14794</a>.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>Kitaev, Nikita, Łukasz Kaiser, and Anselm Levskaya. 2020. ‘Reformer: The Efficient Transformer’. ArXiv:2001.04451 [Cs, Stat], February. <a href=http://arxiv.org/abs/2001.04451 target="_blank">http://arxiv.org/abs/2001.04451</a>.&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>Tay, Yi, Mostafa Dehghani, Samira Abnar, Yikang Shen, Dara Bahri, Philip Pham, Jinfeng Rao, Liu Yang, Sebastian Ruder, and Donald Metzler. 2020. ‘Long Range Arena: A Benchmark for Efficient Transformers’. ArXiv:2011.04006 [Cs], November. <a href=http://arxiv.org/abs/2011.04006 target="_blank">http://arxiv.org/abs/2011.04006</a>.&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>Avsec, Žiga, Vikram Agarwal, Daniel Visentin, Joseph R. Ledsam, Agnieszka Grabska-Barwinska, Kyle R. Taylor, Yannis Assael, John Jumper, Pushmeet Kohli, and David R. Kelley. 2021. ‘Effective Gene Expression Prediction from Sequence by Integrating Long-Range Interactions’. Nature Methods 18 (10): 1196–1203. <a href=https://doi.org/10.1038/s41592-021-01252-x target="_blank">https://doi.org/10.1038/s41592-021-01252-x</a>.&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>Forrest et al. 2014. ‘A Promoter-Level Mammalian Expression Atlas’. Nature 507 (7493): 462. <a href=https://doi.org/10.1038/nature13182 target="_blank">https://doi.org/10.1038/nature13182</a>.&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p>Devlin, Jacob, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. 2019. ‘BERT: Pre-Training of Deep Bidirectional Transformers for Language Understanding’. ArXiv:1810.04805 [Cs], May. <a href=http://arxiv.org/abs/1810.04805 target="_blank">http://arxiv.org/abs/1810.04805</a>.&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../background/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Background" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Background
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../discussion/" class="md-footer__link md-footer__link--next" aria-label="Next: Discussion" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Discussion
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "content.tabs.link"], "search": "../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a6c66575.min.js"></script>
+      
+    
+  </body>
+</html>

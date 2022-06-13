@@ -1,0 +1,673 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.15">
+    
+    
+      
+        <title>Methods - Predicting gene expression from sequence using sparse-attention</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.c382b1dc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cc9b2e1e.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#model-architecture" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Predicting gene expression from sequence using sparse-attention" class="md-header__button md-logo" aria-label="Predicting gene expression from sequence using sparse-attention" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Predicting gene expression from sequence using sparse-attention
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Methods
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Predicting gene expression from sequence using sparse-attention" class="md-nav__button md-logo" aria-label="Predicting gene expression from sequence using sparse-attention" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Predicting gene expression from sequence using sparse-attention
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Abstract & Lay Summary
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../background/" class="md-nav__link">
+        Background
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../results/" class="md-nav__link">
+        Results
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../discussion/" class="md-nav__link">
+        Discussion
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Methods
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Methods
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#model-architecture" class="md-nav__link">
+    Model architecture
+  </a>
+  
+    <nav class="md-nav" aria-label="Model architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#figure-9-model-architecture" class="md-nav__link">
+    Figure 9: Model architecture
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sparse-attention" class="md-nav__link">
+    Sparse attention
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#figure-10-the-three-components-of-sparse-attention" class="md-nav__link">
+    Figure 10: The three components of sparse-attention
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modelling-data" class="md-nav__link">
+    Modelling data
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-training" class="md-nav__link">
+    Model training
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-usage-and-training-speed" class="md-nav__link">
+    Memory usage and training speed
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#accuracy-evaluation" class="md-nav__link">
+    Accuracy evaluation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#measuring-the-correlation-of-predictions" class="md-nav__link">
+    Measuring the correlation of predictions
+  </a>
+  
+    <nav class="md-nav" aria-label="Measuring the correlation of predictions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#figure-11-workflow-to-measure-the-correlation-of-predictions" class="md-nav__link">
+    Figure 11: Workflow to measure the correlation of predictions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#receptive-field" class="md-nav__link">
+    Receptive field
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../conclusion/" class="md-nav__link">
+        Conclusion & Future Work
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../references/" class="md-nav__link">
+        References
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#model-architecture" class="md-nav__link">
+    Model architecture
+  </a>
+  
+    <nav class="md-nav" aria-label="Model architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#figure-9-model-architecture" class="md-nav__link">
+    Figure 9: Model architecture
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sparse-attention" class="md-nav__link">
+    Sparse attention
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#figure-10-the-three-components-of-sparse-attention" class="md-nav__link">
+    Figure 10: The three components of sparse-attention
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modelling-data" class="md-nav__link">
+    Modelling data
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-training" class="md-nav__link">
+    Model training
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-usage-and-training-speed" class="md-nav__link">
+    Memory usage and training speed
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#accuracy-evaluation" class="md-nav__link">
+    Accuracy evaluation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#measuring-the-correlation-of-predictions" class="md-nav__link">
+    Measuring the correlation of predictions
+  </a>
+  
+    <nav class="md-nav" aria-label="Measuring the correlation of predictions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#figure-11-workflow-to-measure-the-correlation-of-predictions" class="md-nav__link">
+    Figure 11: Workflow to measure the correlation of predictions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#receptive-field" class="md-nav__link">
+    Receptive field
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+  <h1>Methods</h1>
+
+<h2 id="model-architecture">Model architecture</h2>
+<p>The S-Enformer architecture is a combination of the Enformer<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> and BigBird<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup> models. At a high level, S-Enformer is composed of the six parts (<a href=http://msc.bc.ic.ac.uk/~dgc21/methods/#figure-9-model-architecture>Figure 9</a>): (1: <a href=https://github.com/Currie32/s-enformer/blob/master/s_enformer/enformer.py#L91-L95 target="_blank">Stem</a>) convolution blocks with attention pooling, (2: <a href=https://github.com/Currie32/s-enformer/blob/master/s_enformer/enformer.py#L99-L105 target="_blank">Convolutional tower</a>) 6 convolutional blocks with batch normalisation and attention pooling, (3: <a href=https://github.com/Currie32/s-enformer/blob/master/s_enformer/enformer.py#L118-L131 target="_blank">Transformers</a>) 11 transformer blocks with layer normalisation, sparse-attention, and dropout, (4: <a href=https://github.com/Currie32/s-enformer/blob/master/s_enformer/enformer.py#L133 target="_blank">Cropping</a>) a cropping layer, (5: <a href=https://github.com/Currie32/s-enformer/blob/master/s_enformer/enformer.py#L135-L138 target="_blank">Pointwise convolution</a>) a pointwise convolution with dropout and a Gaussian error linear unit (GELU) activation function, and (6: <a href=https://github.com/Currie32/s-enformer/blob/master/s_enformer/enformer.py#L148-L154 target="_blank">Heads</a>) a network head for each organism consisting of a dense layer and softplus activation function. Tensorflow v2.4.1<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup> and Sonnet v2.0.0<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> were the primary libraries for developing the model.</p>
+<h3 id="figure-9-model-architecture">Figure 9: Model architecture</h3>
+<figure>
+<p><img alt="enformer_architecture" src="../img/enformer_architecture.png" width="900" />
+  </p>
+<figcaption>
+    The architecture of the Enformer and S-Enformer models. The image above is largely based on <a href=https://www.nature.com/articles/s41592-021-01252-x/figures/5 target="_blank">Extended Figure 1</a> from the Enformer paper. Given that the only architectural difference between Enformer and S-Enformer is the type of attention, the same diagram can be used to illustrate both models. The lower set of flowcharts provide greater detail about some of the components in the upper image.
+  </figcaption>
+</figure>
+<p>The input to S-Enformer is a 3-D matrix with dimensions for batch size, sequence length, and nucleotides. The batch size was set to 5, but it can vary based on the training requirements, the sequence length is always 196,608 bp, and there are 4 nucleotides (corresponding to A = [1,0,0,0], C = [0,1,0,0], G = [0,0,1,0], T = [0,0,0,1], N = [0,0,0,0]). When an input sequence is fed into S-Enformer, it is first reduced in length to 1,536 by the attention pooling in the stem and convolutional tower. Then, distal interactions within the sequence are learned by the transformer blocks. The cropping layer removes 320 positions at both ends of the sequence as the Enformer model could not share information to these edges from the opposite half of the sequence<sup id="fnref2:1"><a class="footnote-ref" href="#fn:1">1</a></sup>. It is possible for this layer to be removed so that more nodes connect with the pointwise convolutional layer and potentially increase the accuracy of the model, but changing the model architecture this significantly was outside the scope of this work. In the last section of the model, it predicts the genomic tracks for the relevant organism. There are 5,313 tracks for humans and 1,643 for mice, each of length 896, which correspond to a DNA sequence length of 114,688 bp aggregated into 128 bp bins.</p>
+<h3 id="sparse-attention">Sparse attention</h3>
+<p>The multi-head attention layers help the transformer blocks to learn the relationship between DNA sequence and expression levels. This is done by having each head (eight were used in S-Enformer) attend to the sequence separately, thereby learning different relationships between the DNA sequence and expression level. The output of these heads are concatenated and linearly transformed to be used as input by the next step in the transformer block<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup>. Within each attention head, it is the sparse-attention mechanism that allows the model to learn these relationships with a linear (as opposed to quadratic) dependency on memory. There are three components to sparse-attention: (1) random attention, (2) sliding attention, and (3) global attention (<a href=http://msc.bc.ic.ac.uk/~dgc21/methods/#figure-10-the-three-components-of-sparse-attention>Figure 10</a>).</p>
+<h3 id="figure-10-the-three-components-of-sparse-attention">Figure 10: The three components of sparse-attention</h3>
+<figure>
+<p><img alt="attention" src="../img/attention.png" width="600" />
+  </p>
+<figcaption>
+    This diagram illustrates which tokens are attended to when using sparse-attention. Global attention is used by the first and last token as they are connected to all other tokens. Sliding attention is when a token attends to its neighbouring tokens. Random attention is used by random tokens attending to other ones. They are shown in pairs to demonstrate the use of blocks by BigBird’s sparse-attention mechanism, i.e. groups of tokens attend to each other, rather than individual tokens. This is a simplified diagram of S-Enformer’s sparse-attention as each square represents 64 tokens, which is the block size of the model.
+  </figcaption>
+</figure>
+<p>Random attention is when a subset of tokens attend to other tokens. This allows information to be shared across the network, but without the memory requirements of full attention. 192 tokens (of the 1,536) are randomly attended to in each layer.</p>
+<p>Sliding attention makes use of the <a href=https://en.wikipedia.org/wiki/Locality_of_reference target="_blank">locality of reference</a>. In a DNA sequence (and natural language processing in general), a significant amount of information can be learned about a token from its neighbouring tokens<sup id="fnref2:2"><a class="footnote-ref" href="#fn:2">2</a></sup>. In S-Enformer, a token attends to 64 tokens to the left and right of itself to capture the local information.</p>
+<p>Global attention is when a token attends to all other tokens in a sequence. For S-Enformer, global attention is used by the first and last 64 tokens of a sequence. In comparison, all tokens use global attention in Enformer, therefore it can be another term for self-attention. The benefit of global attention is that it can help information to move much faster in a network than relying on just sliding or random attention, as global tokens are connected with all other tokens.</p>
+<p>An issue with this attention is that sparse multiplication is inefficient when training a model on a GPU<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup><sup>,</sup><sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup>. To overcome this, query tokens and key tokens are grouped together into attention blocks (instead of being uniformly distributed). This allows matrix multiplication to be used, rather than a gather operation, which is much faster. Since sparse-attention is being used, the time complexity is linear, O(nbd) (n = number of tokens, b = block size, d = number of tokens to attend to), instead of quadratic, O(n2d), for self-attention<sup id="fnref3:2"><a class="footnote-ref" href="#fn:2">2</a></sup>. This results in fewer than half of nodes being attended to in each layer using sparse-attention, compared to all nodes attending to all others in each layer using self-attention.</p>
+<h2 id="modelling-data">Modelling data</h2>
+<p>S-Enformer was trained, validated, and tested using the same data as Enformer<sup id="fnref3:1"><a class="footnote-ref" href="#fn:1">1</a></sup>. There are 34,021 training, 2,213 validation, and 1,937 test sequences for the human genome, and 29,295 training, 2,209 validation, and 2,017 test sequences for the mouse genome. For the human genome, each example contains 684 DNase-seq or ATAC-seq, 1,860 histone modification ChIP–Seq, 2,131 TF ChIP-Seq, and 638 CAGE tracks (totalling 5,313). For the mouse genome, each example contains 228 DNase-seq or ATAC-Seq, 750 histone modification ChIP–Seq, 308 TF ChIP–Seq, and 357 CAGE tracks (totalling 1,643).</p>
+<h2 id="model-training">Model training</h2>
+<p>The model was trained for 25,000 steps using a batch size of 5 on a single RTX 6000 GPU, which took about 3 days (<a href=https://github.com/Currie32/s-enformer/blob/master/s_enformer/train/train.py target="_blank">link to code</a>). The Adam optimizer with a learning rate of 0.0001 was used to train S-Enformer, which is less than the final learning rate of 0.0005 for Enformer. The higher rate used by Enformer resulted in lower Pearson correlation coefficients for S-Enformer on the training and validation data. The same architecture parameters were used as Enformer, specifically 1,536 channels, 8 attention heads, and 11 transformer blocks.</p>
+<p>A <a href=https://tfhub.dev/deepmind/enformer/1 target="_blank">pre-trained Enformer</a> model, shared by its authors, was used when comparing the performance against S-Enformer.</p>
+<h2 id="memory-usage-and-training-speed">Memory usage and training speed</h2>
+<p>A model’s memory usage and training speed was measured across 10 training steps using a batch size of 1 on a single RTX 6000 GPU (<a href=https://github.com/Currie32/s-enformer/blob/master/s_enformer/evaluation/memory_and_speed.py target="_blank">link to code</a>). The peak memory usage was reported using the <a href=https://www.tensorflow.org/api_docs/python/tf/config/experimental/get_memory_info target="_blank">tf.config.experimental.get_memory_info</a> function. After each training step, the memory stats were reset so that an average could be taken across the first 10 steps. Measuring the training time began just before the first training step and concluded once the tenth training step had finished.</p>
+<h2 id="accuracy-evaluation">Accuracy evaluation</h2>
+<p>Only the human testing dataset was used to compare the performance between the two models (<a href=https://github.com/Currie32/s-enformer/blob/master/s_enformer/evaluation/correlation_performance.py target="_blank">link to code</a>). The mouse testing data was omitted as the human data was sufficient to make a fair comparison and we are more interested in these results. The Pearson correlation coefficient was reported for each of the four genomic tracks: (1) DNase-Seq and ATAC-Seq, (2) histone modifications ChIP-Seq, (3) TF ChIP-Seq, and (4) CAGE. <a href=https://www.nature.com/articles/s41592-021-01252-x#Sec18 target="_blank">Supplementary Table 2</a> from the Enformer paper was used to label the track type within each of the 5,313 testing examples. The mean Pearson correlation coefficient was reported for each track type to compare the performance between Enformer and S-Enformer.</p>
+<h2 id="measuring-the-correlation-of-predictions">Measuring the correlation of predictions</h2>
+<p>The correlation between Enformer’s and S-Enformer’s predictions were measured using the 1,939 testing sequences (the workflow is illustrated in <a href=http://msc.bc.ic.ac.uk/~dgc21/methods/#figure-11-workflow-to-measure-the-correlation-of-predictions>Figure 11</a>; <a href=https://github.com/Currie32/s-enformer/blob/master/s_enformer/evaluation/correlation_between_models.py target="_blank">link to code</a>). Each sequence was inputted into the two models to collect the gene expression for the 5,313 genomic tracks. The tracks were then grouped into their four genomic track types and had their (Pearson) correlation measured with the experimental results to evaluate their quality. For each of the 1,939 testing sequences, the correlations were averaged within the four track types. The two model’s averaged-correlation values were then correlated (Pearson) with each other to understand the similarity between predictions.</p>
+<h3 id="figure-11-workflow-to-measure-the-correlation-of-predictions">Figure 11: Workflow to measure the correlation of predictions</h3>
+<figure>
+<p><img alt="correlation_workflow" height="200" src="../img/correlation_workflow.png" />
+  </p>
+<figcaption>
+    The workflow to measure the correlation of predictions from Enformer and S-Enformer within the four genomic track types. First, the testing sequences are fed into the models to predict gene expression. Then the predictions are grouped into their genomic track types before being correlated with the experiment results. The correlations are then averaged within each of the 1,939 testing examples. Finally the averaged correlation coefficients for the two models are correlated with each other to help understand the similarity of predictions.
+  </figcaption>
+</figure>
+<p>To determine how often S-Enformer outperformed Enformer, the averaged-correlation values were compared, within each track type, to measure the percentage of the testing examples that S-Enformer had a higher average correlation than Enformer.</p>
+<h2 id="receptive-field">Receptive field</h2>
+<p>The receptive field for a model was measured by: (1) taking a random sequence of DNA (length = 196,608), (2) predicting the expression across all 5,313 genomic tracks, (3) randomly changing a single base at a predefined location (such as the first nucleotide), (4) again predicting the expression across all 5,313 genomic tracks, (5) calculating the difference in expression between the two sets of predictions, (6) repeating steps 1-5 one hundred times, and (7) averaging the change in expression for the 896 position across the 5,313 genomic tracks. These seven steps were repeated nine times, each using a different mutation location. The nine locations were equally spaced across the sequence of DNA (<a href=https://github.com/Currie32/s-enformer/blob/master/s_enformer/evaluation/receptive_field.py target="_blank">link to code</a>).</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>Avsec, Žiga, Vikram Agarwal, Daniel Visentin, Joseph R. Ledsam, Agnieszka Grabska-Barwinska, Kyle R. Taylor, Yannis Assael, John Jumper, Pushmeet Kohli, and David R. Kelley. 2021. ‘Effective Gene Expression Prediction from Sequence by Integrating Long-Range Interactions’. Nature Methods 18 (10): 1196–1203. <a href=https://doi.org/10.1038/s41592-021-01252-x target="_blank">https://doi.org/10.1038/s41592-021-01252-x</a>.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>Zaheer, Manzil, Guru Guruganesh, Avinava Dubey, Joshua Ainslie, Chris Alberti, Santiago Ontanon, Philip Pham, et al. 2021. ‘Big Bird: Transformers for Longer Sequences’. ArXiv:2007.14062 [Cs, Stat], January. <a href=http://arxiv.org/abs/2007.14062 target="_blank">http://arxiv.org/abs/2007.14062</a>.&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>TensorFlow Developers. 2022. TensorFlow (version v2.8.2). Zenodo. <a href=https://doi.org/10.5281/ZENODO.4724125 target="_blank">https://doi.org/10.5281/ZENODO.4724125</a>.&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>Sonnet Developers. 2020. Sonnet Documentation — Sonnet Documentation (version v2.0.0). <a href=https://sonnet.readthedocs.io/en/latest/ target="_blank">https://sonnet.readthedocs.io/en/latest/</a>.&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>Vaswani, Ashish, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, and Illia Polosukhin. 2017. ‘Attention Is All You Need’. ArXiv:1706.03762 [Cs], December. <a href=http://arxiv.org/abs/1706.03762 target="_blank">http://arxiv.org/abs/1706.03762</a>.&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p>Gale, Trevor, Matei Zaharia, Cliff Young, and Erich Elsen. 2020. ‘Sparse GPU Kernels for Deep Learning’. ArXiv:2006.10901 [Cs, Stat], August. <a href=http://arxiv.org/abs/2006.10901 target="_blank">http://arxiv.org/abs/2006.10901</a>.&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:7">
+<p>Yao, Zhuliang, Shijie Cao, Wencong Xiao, Chen Zhang, and Lanshun Nie. 2019. ‘Balanced Sparsity for Efficient DNN Inference on GPU’. Proceedings of the AAAI Conference on Artificial Intelligence 33 (July): 5676–83. <a href=https://doi.org/10.1609/aaai.v33i01.33015676 target="_blank">https://doi.org/10.1609/aaai.v33i01.33015676</a>.&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../discussion/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Discussion" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Discussion
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../conclusion/" class="md-footer__link md-footer__link--next" aria-label="Next: Conclusion &amp; Future Work" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Conclusion & Future Work
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "content.tabs.link"], "search": "../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a6c66575.min.js"></script>
+      
+    
+  </body>
+</html>
