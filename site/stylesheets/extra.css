@@ -33,3 +33,6 @@ p {
 .md-nav__link {
     text-decoration: none;
 }
+.md-typeset .footnote-ref {
+    font-size: 12px;
+}

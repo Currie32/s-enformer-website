@@ -58,7 +58,7 @@ The correlation between Enformer’s and S-Enformer’s predictions were measure
 <figure markdown>
   ![correlation_workflow](img/correlation_workflow.png){ height=200 }
   <figcaption>
-    The workflow to measure the correlation of predictions from Enformer and S-Enformer within the four genomic track types. First, the testing sequences are fed into the models to predict gene expression. Then the predictions are grouped into their genomic track types before being correlated with the experiment results. The correlations are averaged within each genomic track type. Finally the averaged correlation coefficients for the two models are correlated with each other to help understand the similarity of predictions.
+    The workflow to measure the correlation of predictions from Enformer and S-Enformer within the four genomic track types. First, the testing sequences are fed into the models to predict gene expression. Then the predictions are grouped into their genomic track types before being correlated with the experiment results. The correlations are then averaged within each of the 1,939 testing examples. Finally the averaged correlation coefficients for the two models are correlated with each other to help understand the similarity of predictions.
   </figcaption>
 </figure>
 
